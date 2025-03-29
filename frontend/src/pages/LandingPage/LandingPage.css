@@ -9,18 +9,40 @@
 
 .landing-page-title {
     position: absolute;
-    top: 5%;
-    font-size: 2rem; /* Adjust the title size */
+    top: 10%;
+    font-size: 1.5rem; /* Adjust the title size */
+}
+
+.landing-page-info {
+    background-color: white;
+    padding: 40px 10px;
+    border: 2px solid rgb(238, 108, 2);
+    border-radius: 10px;
+    width: 85%;
+    font-size: 1.2rem;
+}
+
+.button-row{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
 }
 
 .enter-button {
-    padding: 20px 40px;
-    border-radius: 5px;
-    font-size: 1.5rem;
+    max-width: 200px; /* Prevents too small buttons */
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
     cursor: pointer;
-    margin-top: 10%;
-}
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    background-color: white;
+  }
 
+.enter-button:hover  {
+    background-color: rgb(255, 115, 0);
+    border: 2px solid black;
+}
 /* Media Queries for Tablets and Small Screens */
 @media (max-width: 768px) {
     .container {
@@ -28,29 +50,48 @@
     }
 
     .landing-page-title {
-        font-size: 1.5rem; /* Smaller title size */
+        font-size: 1.3rem; /* Smaller title size */
         top: 10%; /* Adjust title position */
     }
 
+    .landing-page-info {
+        font-size: 1.1rem;
+    }
+
     .enter-button {
-        padding: 15px 30px;
-        font-size: 1.4rem; /* Make the button larger */
+        font-size: 1rem; /* Make the button larger */
+        width: 40%; /* Adjust button width */
     }
 }
 
 /* Media Queries for Mobile Devices */
-@media (max-width: 480px) {
+@media (max-width: 468px) {
     .container {
-        padding-top: 10px; /* Reduce padding */
+        
     }
 
     .landing-page-title {
-        font-size: 1.2rem; /* Even smaller title for very small screens */
-        top: 15%; /* Adjust title positioning */
+        font-size: 1.1rem; /* Even smaller title for very small screens */
+        top: 10%; /* Adjust title positioning */
+    }
+
+    .landing-page-info {
+        width: 85%;
+        
+        font-size: 1rem;
     }
 
     .enter-button {
-        padding: 10px 20px; /* Increase button padding */
-        font-size: 1.2rem; /* Increase button font size */
+        width: 50%; /* Adjust button width */
+        font-size: .9rem; /* Increase button font size */
     }
 }
+
+.button-row {
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+    justify-content: center;
+    flex-wrap: wrap; /* So buttons don't overflow on smaller screens */
+    margin-top: 2rem; /* Some space above buttons */
+  }
+  
