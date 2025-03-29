@@ -178,6 +178,7 @@ export default function RightBranch() {
                 <div className="input-group">
                     <label className="phLabel">Enter pH:</label>
                     <input
+                        className="phInput"
                         type="number"
                         value={Ph}
                         onChange={(e) => setPh(e.target.value)}
@@ -187,6 +188,7 @@ export default function RightBranch() {
                 </div>
                 <div className="input-group">
                     <label className="baseDeficitLabel">Enter Base Deficit:</label>
+                    <p className="minusSign"> - </p>
                     <input
                         type="number"
                         value={BaseDeficit}
