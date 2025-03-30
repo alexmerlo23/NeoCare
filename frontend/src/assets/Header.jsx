@@ -12,7 +12,7 @@ export default function Header() {
     return (
         <header className="neocare-header">
             <div className="header-content">
-                <div className="neocare-title">NeoCare</div>
+                <div className="neocare-title">Neuroprotective Internvention Evaluation</div>
                 <div className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
                     <div className="hamburger-line"></div>
                     <div className="hamburger-line"></div>
@@ -20,11 +20,10 @@ export default function Header() {
                 </div>
                 {isMenuOpen && (
                     <nav className="dropdown-menu">
-                        <Link to="/" onClick={toggleMenu}>Landing Page</Link>
-                        <Link to="/home" onClick={toggleMenu}>Home</Link>
-                        <Link to="/leftbranch" onClick={toggleMenu}>Left Branch</Link>
-                        <Link to="/midbranch" onClick={toggleMenu}>Mid Branch</Link>
-                        <Link to="/rightbranch" onClick={toggleMenu}>Right Branch</Link>
+                        <Link to="/" onClick={toggleMenu}>Home</Link>
+                        <Link to="/home" onClick={toggleMenu}>Begin Evaluation</Link>
+                        <Link to="/landingleftbranch" onClick={toggleMenu}>IVH Info</Link>
+                        <Link to="/landingrightbranch" onClick={toggleMenu}>HIE Info</Link>
                     </nav>
                 )}
             </div>

@@ -16,7 +16,7 @@
 .landing-page-info {
     background-color: white;
     padding: 40px 10px;
-    border: 2px solid rgb(238, 108, 2);
+    border: 2px solid black;
     border-radius: 10px;
     width: 85%;
     font-size: 1.2rem;
@@ -40,7 +40,7 @@
   }
 
 .enter-button:hover  {
-    background-color: rgb(255, 115, 0);
+    background-color:#6ac8ff;
     border: 2px solid black;
 }
 /* Media Queries for Tablets and Small Screens */

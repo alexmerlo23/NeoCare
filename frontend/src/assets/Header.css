@@ -2,8 +2,8 @@
 
 .neocare-header {
     width: 100%;
-    background-color: #0300a0;
-    color: white;
+    background-color: #79d9ff;
+    color: Black;
     padding: 15px 20px;
     position: sticky;
     top: 0;
@@ -21,8 +21,9 @@
 }
 
 .neocare-title {
-    font-family: 'Boldonse', sans-serif; /* Apply the cool font */
-    font-size: 1.7rem; /* Increase size for impact (was 1.5rem) */
+    font-family:  sans-serif; /* Apply the cool font */
+    font-size: 1.4rem; /* Increase size for impact (was 1.5rem) */
+    font-weight: bold;
     text-align: left;
     flex-grow: 1;
     min-width: 0;
@@ -64,7 +65,7 @@
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: #0300a0;
+    background-color: #6ac8ff;
     display: flex;
     flex-direction: column;
     width: 200px;
@@ -72,14 +73,14 @@
 }
 
 .dropdown-menu a {
-    color: white;
+    color: Black;
     padding: 15px;
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-    background-color: #02008a;
+    background-color: #539eca;
 }
 
 /* Responsive adjustments */
