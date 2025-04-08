@@ -24,7 +24,6 @@ export default function Header() {
                         <Link to="/" onClick={toggleMenu}>Begin Evaluation</Link>
                         <Link to="/leftbranch" onClick={toggleMenu}>Bundle Guide</Link>
                         <Link to="/rightbranch" onClick={toggleMenu}>Sarnat Exam</Link>
-                        <Link to="/landingleftbranch" onClick={toggleMenu}>More Information</Link>
                     </nav>
                 )}
             </div>
