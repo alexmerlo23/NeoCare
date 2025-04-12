@@ -240,7 +240,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
     return (
         <div className="right-branch-container">
             <div className="right-branch-top-container">
-                <p>Since the neonate is ≥ 35 weeks, it is now necessary to perform the Sarnat exam.<br></br>
+                <p>Since the neonate is ≥ 35 weeks, it is now necessary to perform the Sarnat exam.<br></br><br></br>
                 Below is the FNNN's offical Sarnat exam as well as a simplified version.
                 </p>
             </div>

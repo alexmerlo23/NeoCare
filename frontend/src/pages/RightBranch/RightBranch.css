@@ -328,10 +328,14 @@
 
 
 @media (max-width: 468px) {
-    .right-branch-container {
+     .right-branch-container {
         margin-left: 6%;
     }
     
+    .right-branch-top-container {
+        font-size: .9rem;
+    }
+
     .right-branch-sarnat-exam {
         width: 95%;
     }
