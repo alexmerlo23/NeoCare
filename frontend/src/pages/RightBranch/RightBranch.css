@@ -313,12 +313,33 @@
     .part-5-description-left {
         border-top: 2px solid black; /* optional: reintroduce top border if needed */
     }
+
+    .right-branch-sarnat-exam {
+        width: 95%;
+    }
+    .radio-group p {
+        width: 45%;
+    }
+
+    .input-group input {
+        width: 25%;
+    }
 }
 
 
 @media (max-width: 468px) {
     .right-branch-container {
-        margin-left: 15%;
+        margin-left: 6%;
     }
     
+    .right-branch-sarnat-exam {
+        width: 95%;
+    }
+    .radio-group p {
+        width: 90%;
+    }
+
+    .input-group input {
+        width: 25%;
+    }
 }
