@@ -75,6 +75,7 @@
 }
 
 .right-branch-sarnat-exam h3 {
+    font-size: x-large;
     text-align: left;
     margin-left: 20px;
 }
@@ -86,8 +87,7 @@
 
 .radio-group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Always stack items in column */
     gap: 10px;
     margin: 10px 5px 10px 20px;
 }
@@ -96,20 +96,21 @@
     background-color: lightgray;
     margin: 0px 2px;
     border: 2px solid black;
-    border-radius: 2px; 
+    border-radius: 2px;
+    font-weight: bold; 
     flex: 1;
-    text-align: center;
-    padding: 8px 2px; /* Top and bottom padding only */
-    width: 45%; /* Restrict label width to half the screen */
+    text-align: left;
+    padding: 8px 10px; /* Top and bottom padding only */
+    width: 80%; /* Restrict label width to half the screen */
     word-wrap: break-word; /* Break long words to avoid overflow */
 }
 
 
 .radio-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Always stack items in column */
     font-size: .9rem;
-    width: 50%;
+    width: 100%;
     gap: 5px;
     flex: 1;
 }
@@ -118,12 +119,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: left;
-    width: 50%; /* Dynamically adjusts spacing */
-    margin: 0 5px;
 }
 
+.radio-label-text {
+    text-align: left;
+    padding-left: 1%;   /* Indent all lines */
+}
+
+
 .radio-buttons input[type="radio"] {
-    margin: 0px 10px;
+    margin: 0px 10px;;
 }
 
 .highlight-group {
@@ -193,6 +198,7 @@
     background-color: white;
     width: 90%;
     margin: 10px auto;
+    margin-top: 3%;
 }
 
 .part-5-container h3{
@@ -278,6 +284,10 @@
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
+.button-group{
+    margin-bottom: 5%;
+}
+
 @media (max-width: 900px) {
     .radio-group {
         flex-direction: column;
@@ -318,7 +328,12 @@
         width: 95%;
     }
     .radio-group p {
-        width: 45%;
+        width: 90%;
+    }
+
+    .radio-label-text {
+        text-align: left;
+        padding-left: 1%;   /* Indent all lines */
     }
 
     .input-group input {
@@ -339,9 +354,20 @@
     .right-branch-sarnat-exam {
         width: 95%;
     }
+
     .radio-group p {
         width: 90%;
     }
+
+    .radio-buttons{
+        font-size: .8rem;
+    }
+    
+    .radio-label-text {
+        text-align: left;
+        padding-left: 1%;   /* Indent all lines */
+    }
+    
 
     .input-group input {
         width: 25%;

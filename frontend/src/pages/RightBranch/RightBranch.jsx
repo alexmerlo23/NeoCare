@@ -76,12 +76,14 @@ export default function RightBranch() {
         summaryText += `${criteria.has_seizures === "0" ? "The neonate has seizures<br />" : ""}`;
     
         const encephalopathySigns = Object.entries(criteria.encephalopathy_details)
-            .filter(([_, value]) => value === "Moderate" || value === "Severe")
+            .filter(([_, value]) => value === "Mild" || value === "Moderate" || value === "Severe")
             .map(([key, value]) => {
                 const signName = key.replace(/_/g, " ");
-                const signValue = optionsMap[key][value === "Moderate" ? 1 : 2];
-                return `Neonate's ${signName} is ${signValue} (${value} sign of Encephalopathy)`;
+                const severityIndex = ["Normal", "Mild", "Moderate", "Severe"].indexOf(value);
+                const signValue = optionsMap[key]?.[severityIndex] || value;
+                return `Neonate's ${signName} - ${signValue} (${value} sign of Encephalopathy)`;
             });
+            
     
         if (encephalopathySigns.length > 0) {
             summaryText += encephalopathySigns.join("<br />") + "<br />";
@@ -127,10 +129,21 @@ export default function RightBranch() {
                 summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
             } else {
                 if (loc === "Severe") {
-                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe HIE</b> (based on tie-breaker).`;
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe HIE</b>.`;
                 } else {
-                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b> (based on tie-breaker).`;
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
                 }
+            }
+        }
+        else{
+            if (criteria.has_seizures === "0"){
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
+            }
+            else if (criteria.signs_of_encephalopathy > 0){
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Mild HIE</b>.`;
+            }
+            else{
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows <b>no signs of HIE</b>.`;
             }
         }
     
@@ -139,16 +152,18 @@ export default function RightBranch() {
     
     // Add optionsMap
     const optionsMap = {
-        level_of_consciousness: ["Normal", "Lethargic", "Stupor / Coma"],
-        spontaneous_activity: ["Normal", "Decreased", "No Activity"],
-        posture: ["Normal", "Distal Flexion / Extension", "Decerebrate"],
-        tone: ["Normal", "Hypotonia / Hypertonia", "Flaccid"],
-        suck: ["Normal", "Weak/Bite", "Absent"],
-        moro: ["Normal", "Incomplete", "Absent"],
-        pupils: ["Normal", "Constricted", "Skew / Non-reactive"],
-        heart_rate: ["Normal", "Bradycardia", "Variable"],
-        respirations: ["Normal", "Periodic", "Apnea/Intubated"]
+        level_of_consciousness: ["Normal", "Hyper-alert, jitteriness, high-pitched cry, inconsolable", "Lethargic", "Stupor / Coma"],
+        spontaneous_activity: ["Normal", "Mildly Decreased", "Decreased Activity", "No Activity"],
+        posture: ["Normal", "Mild flexion of distal joints", "Distal flexion, complete extension, frog leg posture", "Decerebrate"],
+        tone: ["Normal", "Normal or slightly increased peripheral tone", "Hypotonia (focal/general), hypertonia (focal/truncal)", "Flaccid"],
+        suck: ["Normal", "Poor/Decreased", "Weak/Bite", "Absent"],
+        moro: ["Normal", "Partial response, low threshold to elicit", "Incomplete", "Absent"],
+        pupils: ["Normal", "Mydriasis", "Constricted", "Skew deviation / dilated / non-reactive"],
+        heart_rate: ["Normal", "Tachycardia (>160)", "Bradycardia", "Variable"],
+        respirations: ["Normal", "Hyperventilation (RR > 60)", "Periodic or CPAP", "Apnea/Intubated"]
     };
+    
+    
 
     const handleRadioChange = (name, value) => {
         setCriteria((prev) => {
@@ -167,12 +182,15 @@ export default function RightBranch() {
             ].includes(name)) {
                 // Store the value and update encephalopathy_details
                 if (value === "0") {
-                    delete newCriteria.encephalopathy_details[name]; // Remove if Normal
+                    delete newCriteria.encephalopathy_details[name];
                 } else if (value === "1") {
-                    newCriteria.encephalopathy_details[name] = "Moderate"; // Moderate is 1
+                    newCriteria.encephalopathy_details[name] = "Mild";
                 } else if (value === "2") {
-                    newCriteria.encephalopathy_details[name] = "Severe"; // Severe is 2
+                    newCriteria.encephalopathy_details[name] = "Moderate";
+                } else if (value === "3") {
+                    newCriteria.encephalopathy_details[name] = "Severe";
                 }
+                
                 
                // Group logic for Primitive Reflexes and Autonomic System
 const groups = {
@@ -219,13 +237,18 @@ newCriteria.signs_of_encephalopathy = numSigns;
                             type="radio" 
                             name={name} 
                             value={index} 
-                            onChange={(e) => handleRadioChange(name, e.target.value)} 
-                        /> {option}
+                            checked={criteria[name] === String(index)} 
+                            onChange={() => handleRadioChange(name, String(index))} 
+                        />
+                        <span className="radio-label-text">{option}</span>
                     </label>
                 ))}
             </div>
         </div>
     );
+    
+    
+    
 
     const renderHighlightGroup = (name, label, yesSelected, noSelected) => (
         <div className="highlight-group">
@@ -327,17 +350,71 @@ newCriteria.signs_of_encephalopathy = numSigns;
 
                     </div>
                     <h3>General</h3>
-                    {renderRadioGroup("level_of_consciousness", "Level of Consciousness", ["Normal", "Lethargic", "Stupor/Coma"])}
-                    {renderRadioGroup("spontaneous_activity", "Spontaneous Activity", ["Normal", "Decreased", "No Activity"])}
-                    {renderRadioGroup("posture", "Posture", ["Normal", "Distal Flexion/Extension", "Decerebrate"])}
-                    {renderRadioGroup("tone", "Tone", ["Normal", "Hypotonia/Hypertonia", "Flaccid"])}
+                    {renderRadioGroup("level_of_consciousness", "Level of Consciousness", [
+                        "Normal - Alert, responsive to external stimuli", 
+                        "Mild - Hyper-alert, jitteriness, high-pitched cry, inconsolable", 
+                        "Moderate - Lethargic", 
+                        "Severe - Stupor/Coma"
+                    ])}
+
+                    {renderRadioGroup("spontaneous_activity", "Spontaneous Activity", [
+                        "Normal - Changes position when awake", 
+                        "Mild - Normal", 
+                        "Moderate - Decreased activity", 
+                        "Severe - No activity"
+                    ])}
+
+                    {renderRadioGroup("posture", "Posture", [
+                        "Normal - Predominantly flexed when quiet", 
+                        "Mild - Mild flexion of distal joints", 
+                        "Moderate - Distal flexion, complete extension, frog leg posture", 
+                        "Severe - Decerebrate"
+                    ])}
+
+                    {renderRadioGroup("tone", "Tone", [
+                        "Normal - Strong flexor tone in all extremities + hips", 
+                        "Mild - Normal or slightly increased peripheral tone", 
+                        "Moderate - Hypotonia (focal/general), hypertonia (focal/truncal)", 
+                        "Severe - Flaccid"
+                    ])}
+
                     <h3>Primitive Reflexes (Only uses most severe criteria)</h3>
-                    {renderRadioGroup("suck", "Suck", ["Normal", "Weak/Bite", "Absent"])}
-                    {renderRadioGroup("moro", "Moro", ["Normal", "Incomplete", "Absent"])}
+                    {renderRadioGroup("suck", "Suck", [
+                        "Normal - Strong, easily elicited", 
+                        "Mild - Decreased", 
+                        "Moderate - Weak or bite", 
+                        "Severe - Absent"
+                    ])}
+
+                    {renderRadioGroup("moro", "Moro", [
+                        "Normal - Complete", 
+                        "Mild - Partial response, low threshold to elicit", 
+                        "Moderate - Incomplete", 
+                        "Severe - Absent"
+                    ])}
+
                     <h3>Autonomic System (Only uses most severe criteria)</h3>
-                    {renderRadioGroup("pupils", "Pupils", ["Normal", "Constricted", "Skew/Non-reactive"])}
-                    {renderRadioGroup("heart_rate", "Heart Rate", ["Normal", "Bradycardia", "Variable"])}
-                    {renderRadioGroup("respirations", "Respirations", ["Normal", "Periodic", "Apnea/Intubated"])}
+                    {renderRadioGroup("pupils", "Pupils", [
+                        "Normal", 
+                        "Mild - Mydriasis", 
+                        "Moderate - Constricted", 
+                        "Severe - Skew deviation / dilated / non-reactive"
+                    ])}
+
+                    {renderRadioGroup("heart_rate", "Heart Rate", [
+                        "Normal - 100–160 bpm", 
+                        "Mild - Tachycardia (>160)", 
+                        "Moderate - Bradycardia", 
+                        "Severe - Variable"
+                    ])}
+
+                    {renderRadioGroup("respirations", "Respirations", [
+                        "Normal - Regular respirations", 
+                        "Mild - Hyperventilation (RR > 60)", 
+                        "Moderate - Periodic or CPAP", 
+                        "Severe - Apnea/Intubated"
+                    ])}
+
                 </div>
                 <button className='summary-button' onClick={calculateScore}>Summarize Results</button>
                 {summary && (
