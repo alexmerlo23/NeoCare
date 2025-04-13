@@ -34,13 +34,43 @@ export default function RightBranch() {
         return () => window.removeEventListener("resize", handleResize);
     }, [summary]); // Runs whenever summary changes
 
-    const calculateScore = () => {
+    const calculateSummary = () => {
         const predictorA = parseFloat(Ph) <= 7.0 && parseFloat(BaseDeficit) >= 16;
         const predictorB = parseFloat(Ph) >= 7.01 && parseFloat(Ph) <= 7.15 && parseFloat(BaseDeficit) >= 10 && parseFloat(BaseDeficit) <= 15.9;
         const predictorC = criteria.acute_perinatal_event === "0" && criteria.apgar_assisted_ventilation === "0";
         const predictorMet = predictorA || predictorB || predictorC;
     
-        const hasSeizuresOrThreeSigns = criteria.has_seizures === "0" || criteria.signs_of_encephalopathy >= 3;
+        const groups = {
+            primitive_reflexes: ["suck", "moro"],
+            autonomic_system: ["pupils", "heart_rate", "respirations"]
+        };
+    
+        let maxPrimitive = "Normal";
+        let maxAutonomic = "Normal";
+        let otherSigns = [];
+    
+        for (const [key, value] of Object.entries(criteria.encephalopathy_details)) {
+            if (groups.primitive_reflexes.includes(key)) {
+                if (["Moderate", "Severe"].indexOf(value) > ["Moderate", "Severe"].indexOf(maxPrimitive)) {
+                    maxPrimitive = value;
+                }
+            } else if (groups.autonomic_system.includes(key)) {
+                if (["Moderate", "Severe"].indexOf(value) > ["Moderate", "Severe"].indexOf(maxAutonomic)) {
+                    maxAutonomic = value;
+                }
+            } else {
+                otherSigns.push(value);
+            }
+        }
+    
+        // Now count moderate/severe signs
+        const countModerateSevere = (val) => val === "Moderate" || val === "Severe";
+        let modSevCount = 0;
+        if (countModerateSevere(maxPrimitive)) modSevCount++;
+        if (countModerateSevere(maxAutonomic)) modSevCount++;
+        modSevCount += otherSigns.filter(countModerateSevere).length;
+    
+        const hasSeizuresOrThreeSigns = criteria.has_seizures === "0" || modSevCount >= 3;
     
         const qualifies =
             criteria.gestational_age === "0" &&
@@ -81,74 +111,68 @@ export default function RightBranch() {
                 const signName = key.replace(/_/g, " ");
                 const severityIndex = ["Normal", "Mild", "Moderate", "Severe"].indexOf(value);
                 const signValue = optionsMap[key]?.[severityIndex] || value;
-                return `Neonate's ${signName} - ${signValue} (${value} sign of Encephalopathy)`;
+                return `Neonate's ${signName} - ${signValue} (${value} sign of encephalopathy)`;
             });
-            
     
         if (encephalopathySigns.length > 0) {
             summaryText += encephalopathySigns.join("<br />") + "<br />";
         }
     
-        // New logic for determining HIE severity
-        if (criteria.signs_of_encephalopathy >= 3) {
+        // HIE Interpretation logic
+        if (modSevCount >= 3) {
             let moderateCount = 0;
             let severeCount = 0;
             let loc = ""; // level of consciousness
     
-            const groups = {
-                primitive_reflexes: ["suck", "moro"],
-                autonomic_system: ["pupils", "heart_rate", "respirations"]
+            const countSeverity = (val) => {
+                if (val === "Severe") severeCount++;
+                else if (val === "Moderate") moderateCount++;
             };
     
-            let seenPrimitive = false;
-            let seenAutonomic = false;
+            countSeverity(maxPrimitive);
+            countSeverity(maxAutonomic);
     
             for (const [key, value] of Object.entries(criteria.encephalopathy_details)) {
-                if (groups.primitive_reflexes.includes(key)) {
-                    if (!seenPrimitive) {
-                        if (value === "Severe") severeCount++;
-                        else if (value === "Moderate") moderateCount++;
-                        seenPrimitive = true;
-                    }
-                } else if (groups.autonomic_system.includes(key)) {
-                    if (!seenAutonomic) {
-                        if (value === "Severe") severeCount++;
-                        else if (value === "Moderate") moderateCount++;
-                        seenAutonomic = true;
-                    }
-                } else {
+                if (!groups.primitive_reflexes.includes(key) && !groups.autonomic_system.includes(key)) {
                     if (key === "level_of_consciousness") loc = value;
-                    if (value === "Severe") severeCount++;
-                    else if (value === "Moderate") moderateCount++;
+                    countSeverity(value);
                 }
             }
     
             if (severeCount > moderateCount) {
-                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe HIE</b>.`;
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe</b> encephalopathy.`;
             } else if (moderateCount > severeCount) {
-                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate</b> encephalopathy.`;
             } else {
                 if (loc === "Severe") {
-                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe HIE</b>.`;
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Severe</b> encephalopathy.`;
                 } else {
-                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate</b> encephalopathy.`;
                 }
             }
-        }
-        else{
-            if (criteria.has_seizures === "0"){
-                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate HIE</b>.`;
-            }
-            else if (criteria.signs_of_encephalopathy > 0){
-                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Mild HIE</b>.`;
-            }
-            else{
-                summaryText += `<br /><b>Interpretation:</b> The neonate shows <b>no signs of HIE</b>.`;
+        } else {
+            const allMildOrNormal = Object.values(criteria.encephalopathy_details).every(
+                value => value === "Mild" || value === "Normal"
+            );
+    
+            if (criteria.has_seizures === "0") {
+                if (allMildOrNormal) {
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Mild</b> encephalopathy.`;
+                } else {
+                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate</b> encephalopathy.`;
+                }
+            } else if (criteria.signs_of_encephalopathy > 0) {
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Mild</b> encephalopathy.`;
+            } else {
+                summaryText += `<br /><b>Interpretation:</b> The neonate shows <b>no signs of</b> encephalopathy.`;
             }
         }
     
         setSummary(summaryText);
     };
+    
+    
+    
     
     // Add optionsMap
     const optionsMap = {
@@ -263,9 +287,9 @@ newCriteria.signs_of_encephalopathy = numSigns;
     return (
         <div className="right-branch-container">
             <div className="right-branch-top-container">
-                <p>Since the neonate is ≥ 35 weeks, it is now necessary to perform the Sarnat exam.<br></br><br></br>
+                <b>Since the neonate is ≥ 35 weeks, it is now necessary to perform the Sarnat exam.<br></br><br></br>
                 Below is the FNNN's offical Sarnat exam as well as a simplified version.
-                </p>
+                </b>
             </div>
             <div className="right-branch-images">
                 <img className="protocol-image" src="/HIE Hypothermia Protocol.png" alt="HIE Hypothermia Protocol" />
@@ -327,7 +351,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
                 <h4>AND</h4>
                 {renderRadioGroup("apgar_assisted_ventilation", "APGAR ≤ 5 at 10 minutes or assisted ventilation at birth required ≥ 10 minutes", ["Yes", "No"])}
 
-                <h2>5. Has seizures or 3 of 6 of the following signs of Encephalopathy:</h2>
+                <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderat or severe:</h2>
 
                 {renderRadioGroup("has_seizures", "Does the neonate have seizures?", ["Yes", "No"])}
 
@@ -416,7 +440,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
                     ])}
 
                 </div>
-                <button className='summary-button' onClick={calculateScore}>Summarize Results</button>
+                <button className='summary-button' onClick={calculateSummary}>Summarize Results</button>
                 {summary && (
                     <div className="summary-section">
                         <h1>Summary</h1>
