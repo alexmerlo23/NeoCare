@@ -174,7 +174,7 @@ export default function RightBranch() {
     
     
     
-    // Add optionsMap
+    // Summary responses
     const optionsMap = {
         level_of_consciousness: ["Normal", "Hyper-alert, jitteriness, high-pitched cry, inconsolable", "Lethargic", "Stupor / Coma"],
         spontaneous_activity: ["Normal", "Mildly Decreased", "Decreased Activity", "No Activity"],
@@ -217,38 +217,38 @@ export default function RightBranch() {
                 
                 
                // Group logic for Primitive Reflexes and Autonomic System
-const groups = {
-    primitive_reflexes: ["suck", "moro"],
-    autonomic_system: ["pupils", "heart_rate", "respirations"]
-};
+        const groups = {
+            primitive_reflexes: ["suck", "moro"],
+            autonomic_system: ["pupils", "heart_rate", "respirations"]
+        };
 
-const groupFlags = {
-    primitive_reflexes: false,
-    autonomic_system: false
-};
+        const groupFlags = {
+            primitive_reflexes: false,
+            autonomic_system: false
+        };
 
-const individualSigns = [];
+        const individualSigns = [];
 
-for (const [key, value] of Object.entries(newCriteria.encephalopathy_details)) {
-    if (groups.primitive_reflexes.includes(key)) {
-        groupFlags.primitive_reflexes = true;
-    } else if (groups.autonomic_system.includes(key)) {
-        groupFlags.autonomic_system = true;
-    } else {
-        individualSigns.push(key);
-    }
-}
-
-let numSigns = individualSigns.length;
-if (groupFlags.primitive_reflexes) numSigns += 1;
-if (groupFlags.autonomic_system) numSigns += 1;
-
-newCriteria.signs_of_encephalopathy = numSigns;
-
+        for (const [key, value] of Object.entries(newCriteria.encephalopathy_details)) {
+            if (groups.primitive_reflexes.includes(key)) {
+                groupFlags.primitive_reflexes = true;
+            } else if (groups.autonomic_system.includes(key)) {
+                groupFlags.autonomic_system = true;
+            } else {
+                individualSigns.push(key);
             }
-            
-            return newCriteria;
-        });
+        }
+
+        let numSigns = individualSigns.length;
+        if (groupFlags.primitive_reflexes) numSigns += 1;
+        if (groupFlags.autonomic_system) numSigns += 1;
+
+        newCriteria.signs_of_encephalopathy = numSigns;
+
+                    }
+
+                    return newCriteria;
+                });
     };
 
     const renderRadioGroup = (name, label, options) => (
@@ -341,26 +341,12 @@ newCriteria.signs_of_encephalopathy = numSigns;
                 <h4>AND</h4>
                 {renderRadioGroup("apgar_assisted_ventilation", "APGAR ≤ 5 at 10 minutes or assisted ventilation at birth required ≥ 10 minutes", ["Yes", "No"])}
 
-                <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderat or severe:</h2>
+                <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderate or severe:</h2>
 
                 {renderRadioGroup("has_seizures", "Does the neonate have seizures?", ["Yes", "No"])}
 
                 <div className="part-5-container">
                     <div className="part-5-description-container">
-                        <div className="part-5-description-left">
-                            <p>Clinical Criteria</p>
-                        </div>
-                        <div class="part-5-description-right">
-                        {isMobileView ? (
-                            <>
-                                Normal<br />
-                                Moderate<br />
-                                Severe
-                            </>
-                        ) : (
-                            "Normal | Moderate | Severe"
-                        )}
-                        </div>
 
                     </div>
                     <h3>General</h3>
