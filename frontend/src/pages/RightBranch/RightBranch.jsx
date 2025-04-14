@@ -75,7 +75,7 @@ export default function RightBranch() {
         const qualifies =
             criteria.gestational_age === "0" &&
             criteria.birth_weight === "0" &&
-            criteria.time_since_insult === "0" &&
+            criteria.neonate_age === "0" &&
             predictorMet &&
             hasSeizuresOrThreeSigns;
     
@@ -157,8 +157,6 @@ export default function RightBranch() {
     
             if (criteria.has_seizures === "0") {
                 if (allMildOrNormal) {
-                    summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Mild</b> encephalopathy.`;
-                } else {
                     summaryText += `<br /><b>Interpretation:</b> The neonate shows signs of <b>Moderate</b> encephalopathy.`;
                 }
             } else if (criteria.signs_of_encephalopathy > 0) {
