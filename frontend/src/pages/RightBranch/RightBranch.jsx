@@ -287,7 +287,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
     return (
         <div className="right-branch-container">
             <div className="right-branch-sarnat-exam">
-                <h1>A neonate must meet all 5 criteria to qualify for Systemic Hypothermia</h1>
+                <h2>A neonate must meet all 5 criteria to qualify for Systemic Hypothermia</h2>
                 <br></br>
                 <h2>1. Gestational Age</h2>
                 {renderRadioGroup("gestational_age", "Is the gestational age of the neonate ≥ 35 weeks?", ["Yes", "No"])}
@@ -438,6 +438,14 @@ newCriteria.signs_of_encephalopathy = numSigns;
                     </div>
                 )}
             </div>
-        </div>
+            <div className="button-group">
+                <button 
+                    onClick={() => window.location.href = "https://ufneocare.wordpress.com/"}
+                >
+                    Back to the site
+                </button>
+            </div>
+
+            </div>
     );
 }
