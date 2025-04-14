@@ -286,17 +286,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
 
     return (
         <div className="right-branch-container">
-            <div className="right-branch-top-container">
-                <b>Since the neonate is ≥ 35 weeks, it is now necessary to perform the Sarnat exam.<br></br><br></br>
-                Below is the FNNN's offical Sarnat exam as well as a simplified version.
-                </b>
-            </div>
-            <div className="right-branch-images">
-                <img className="protocol-image" src="/HIE Hypothermia Protocol.png" alt="HIE Hypothermia Protocol" />
-                <img className="exclusion-criteria" src="/Exclusion Criteria.png" alt="HIE Hypothermia Exclusion Criteria" />
-            </div>
             <div className="right-branch-sarnat-exam">
-                <h1>Simple Sarnat Exam</h1>
                 <h2>A neonate must meet all 5 criteria to qualify for Systemic Hypothermia</h2>
                 <br></br>
                 <h2>1. Gestational Age</h2>
@@ -447,11 +437,6 @@ newCriteria.signs_of_encephalopathy = numSigns;
                         <p dangerouslySetInnerHTML={{ __html: summary }} />
                     </div>
                 )}
-            </div>
-            <div className="button-group">
-                <button onClick={() => navigate("/")}>
-                    Return to Beginning
-                </button>
             </div>
         </div>
     );
