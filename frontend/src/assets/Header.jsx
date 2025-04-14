@@ -22,13 +22,21 @@ export default function Header() {
                 
                 {isMenuOpen && (
                     <nav className="dropdown-menu">
-                        <a href="https://ufneocare.wordpress.com/" target="_blank" rel="noopener noreferrer" onClick={toggleMenu}>Back to site</a>
+                        <a 
+                            href="https://ufneocare.wordpress.com/" 
+                            target="_self" 
+                            rel="noopener noreferrer" 
+                            onClick={toggleMenu}
+                        >
+                            Back to site
+                        </a>
                         {/*<a href="https://ufneocare.wordpress.com/evaluation" target="_blank" rel="noopener noreferrer" onClick={toggleMenu}>Restart Evaluation</a>*/}
                         {/*<Link to="/" onClick={toggleMenu}>Restart Evaluation</Link>*/}
                         {/*<Link to="/leftbranch" onClick={toggleMenu}>Bundle Guide</Link>*/}
                         {/*<Link to="/" onClick={toggleMenu}>Sarnat Exam</Link>*/}
                     </nav>
                 )}
+
             </div>
         </header>
     );
