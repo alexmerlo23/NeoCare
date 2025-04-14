@@ -298,28 +298,29 @@ export default function RightBranch() {
                 <h2>3. Age of Neonate</h2>
                 {renderRadioGroup("neonate_age", "Is the neonate ≤ 6 hours old?", ["Yes", "No"])}
                 
-                <h2>4. ONE OR MORE Predictors of Severe HIE</h2>
-                <div className="input-group">
-                    <label className="phLabel">Enter pH:</label>
-                    <input
-                        className="phInput"
-                        type="number"
-                        value={Ph}
-                        onChange={(e) => setPh(e.target.value)}
-                        placeholder="pH"
-                        step="0.01"
-                    />
-                </div>
-                <div className="input-group">
-                    <label className="baseDeficitLabel">Enter Base Deficit:</label>
-                    <p className="minusSign"> - </p>
-                    <input
-                        type="number"
-                        value={BaseDeficit}
-                        onChange={(e) => setBaseDeficit(e.target.value)}
-                        placeholder="Base Deficit"
-                        step="0.01"
-                    />
+                <div className="part-4">
+                    <h2 id="label">4. ONE OR MORE Predictors of Severe HIE</h2>
+                    <div className="input-group">
+                        <label className="phLabel">Enter pH:</label>
+                        <input
+                            className="phInput"
+                            type="number"
+                            value={Ph}
+                            onChange={(e) => setPh(e.target.value)}
+                            placeholder="pH"
+                            step="0.01"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label className="baseDeficitLabel">Enter Base Deficit:</label>
+                        <p className="minusSign"> - </p>
+                        <input
+                            type="number"
+                            value={BaseDeficit}
+                            onChange={(e) => setBaseDeficit(e.target.value)}
+                            placeholder="Base Deficit"
+                            step="0.01"
+                        />
                 </div>
 
                 <h3>Predictor A</h3>
@@ -341,80 +342,82 @@ export default function RightBranch() {
                 <h4>AND</h4>
                 {renderRadioGroup("apgar_assisted_ventilation", "APGAR ≤ 5 at 10 minutes or assisted ventilation at birth required ≥ 10 minutes", ["Yes", "No"])}
 
-                <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderate or severe:</h2>
-
-                {renderRadioGroup("has_seizures", "Does the neonate have seizures?", ["Yes", "No"])}
-
-                <div className="part-5-container">
-                    <div className="part-5-description-container">
-
+                </div>
+                    <div className="part-5">
+                    <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderate or severe:</h2>
+                
+                    {renderRadioGroup("has_seizures", "Does the neonate have seizures?", ["Yes", "No"])}
+                
+                    <div className="part-5-container">
+                        <div className="part-5-description-container">
+                
+                        </div>
+                        <h3>General</h3>
+                        {renderRadioGroup("level_of_consciousness", "Level of Consciousness", [
+                            "Normal - Alert, responsive to external stimuli", 
+                            "Mild - Hyper-alert, jitteriness, high-pitched cry, inconsolable", 
+                            "Moderate - Lethargic", 
+                            "Severe - Stupor/Coma"
+                        ])}
+    
+                        {renderRadioGroup("spontaneous_activity", "Spontaneous Activity", [
+                            "Normal - Changes position when awake", 
+                            "Mild - Normal", 
+                            "Moderate - Decreased activity", 
+                            "Severe - No activity"
+                        ])}
+    
+                        {renderRadioGroup("posture", "Posture", [
+                            "Normal - Predominantly flexed when quiet", 
+                            "Mild - Mild flexion of distal joints", 
+                            "Moderate - Distal flexion, complete extension, frog leg posture", 
+                            "Severe - Decerebrate"
+                        ])}
+    
+                        {renderRadioGroup("tone", "Tone", [
+                            "Normal - Strong flexor tone in all extremities + hips", 
+                            "Mild - Normal or slightly increased peripheral tone", 
+                            "Moderate - Hypotonia (focal/general), hypertonia (focal/truncal)", 
+                            "Severe - Flaccid"
+                        ])}
+    
+                        <h3>Primitive Reflexes (Only uses most severe criteria)</h3>
+                        {renderRadioGroup("suck", "Suck", [
+                            "Normal - Strong, easily elicited", 
+                            "Mild - Decreased", 
+                            "Moderate - Weak or bite", 
+                            "Severe - Absent"
+                        ])}
+    
+                        {renderRadioGroup("moro", "Moro", [
+                            "Normal - Complete", 
+                            "Mild - Partial response, low threshold to elicit", 
+                            "Moderate - Incomplete", 
+                            "Severe - Absent"
+                        ])}
+    
+                        <h3>Autonomic System (Only uses most severe criteria)</h3>
+                        {renderRadioGroup("pupils", "Pupils", [
+                            "Normal", 
+                            "Mild - Mydriasis", 
+                            "Moderate - Constricted", 
+                            "Severe - Skew deviation / dilated / non-reactive"
+                        ])}
+    
+                        {renderRadioGroup("heart_rate", "Heart Rate", [
+                            "Normal - 100–160 bpm", 
+                            "Mild - Tachycardia (>160)", 
+                            "Moderate - Bradycardia", 
+                            "Severe - Variable"
+                        ])}
+    
+                        {renderRadioGroup("respirations", "Respirations", [
+                            "Normal - Regular respirations", 
+                            "Mild - Hyperventilation (RR > 60)", 
+                            "Moderate - Periodic or CPAP", 
+                            "Severe - Apnea/Intubated"
+                        ])}
                     </div>
-                    <h3>General</h3>
-                    {renderRadioGroup("level_of_consciousness", "Level of Consciousness", [
-                        "Normal - Alert, responsive to external stimuli", 
-                        "Mild - Hyper-alert, jitteriness, high-pitched cry, inconsolable", 
-                        "Moderate - Lethargic", 
-                        "Severe - Stupor/Coma"
-                    ])}
-
-                    {renderRadioGroup("spontaneous_activity", "Spontaneous Activity", [
-                        "Normal - Changes position when awake", 
-                        "Mild - Normal", 
-                        "Moderate - Decreased activity", 
-                        "Severe - No activity"
-                    ])}
-
-                    {renderRadioGroup("posture", "Posture", [
-                        "Normal - Predominantly flexed when quiet", 
-                        "Mild - Mild flexion of distal joints", 
-                        "Moderate - Distal flexion, complete extension, frog leg posture", 
-                        "Severe - Decerebrate"
-                    ])}
-
-                    {renderRadioGroup("tone", "Tone", [
-                        "Normal - Strong flexor tone in all extremities + hips", 
-                        "Mild - Normal or slightly increased peripheral tone", 
-                        "Moderate - Hypotonia (focal/general), hypertonia (focal/truncal)", 
-                        "Severe - Flaccid"
-                    ])}
-
-                    <h3>Primitive Reflexes (Only uses most severe criteria)</h3>
-                    {renderRadioGroup("suck", "Suck", [
-                        "Normal - Strong, easily elicited", 
-                        "Mild - Decreased", 
-                        "Moderate - Weak or bite", 
-                        "Severe - Absent"
-                    ])}
-
-                    {renderRadioGroup("moro", "Moro", [
-                        "Normal - Complete", 
-                        "Mild - Partial response, low threshold to elicit", 
-                        "Moderate - Incomplete", 
-                        "Severe - Absent"
-                    ])}
-
-                    <h3>Autonomic System (Only uses most severe criteria)</h3>
-                    {renderRadioGroup("pupils", "Pupils", [
-                        "Normal", 
-                        "Mild - Mydriasis", 
-                        "Moderate - Constricted", 
-                        "Severe - Skew deviation / dilated / non-reactive"
-                    ])}
-
-                    {renderRadioGroup("heart_rate", "Heart Rate", [
-                        "Normal - 100–160 bpm", 
-                        "Mild - Tachycardia (>160)", 
-                        "Moderate - Bradycardia", 
-                        "Severe - Variable"
-                    ])}
-
-                    {renderRadioGroup("respirations", "Respirations", [
-                        "Normal - Regular respirations", 
-                        "Mild - Hyperventilation (RR > 60)", 
-                        "Moderate - Periodic or CPAP", 
-                        "Severe - Apnea/Intubated"
-                    ])}
-
                 </div>
                 <button className='summary-button' onClick={calculateSummary}>Summarize Results</button>
                 {summary && (

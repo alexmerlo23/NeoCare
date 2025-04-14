@@ -132,6 +132,11 @@
     margin: 0px 10px;;
 }
 
+.part-4{
+    margin-top: 5%;
+}
+
+
 .highlight-group {
     margin-bottom: 10px;
 }
@@ -191,6 +196,10 @@
     border: 2px solid black;
     box-sizing: border-box;
     
+}
+
+.part-5{
+    margin-top:5%
 }
 
 .part-5-container {
