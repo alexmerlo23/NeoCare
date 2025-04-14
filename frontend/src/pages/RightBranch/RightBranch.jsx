@@ -295,8 +295,8 @@ export default function RightBranch() {
                 <h2>2. Birth Weight</h2>
                 {renderRadioGroup("birth_weight", "Is the birth weight ≥ 1.8 kg?", ["Yes", "No"])}
                 
-                <h2>3. Time Since Insult</h2>
-                {renderRadioGroup("time_since_insult", "Has it been ≤ 6 hours since the last insult occurred?", ["Yes", "No"])}
+                <h2>3. Age of Neonate</h2>
+                {renderRadioGroup("neonate_age", "Is the neonate ≤ 6 hours old?", ["Yes", "No"])}
                 
                 <h2>4. ONE OR MORE Predictors of Severe HIE</h2>
                 <div className="input-group">
