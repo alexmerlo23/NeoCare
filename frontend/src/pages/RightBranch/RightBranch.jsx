@@ -295,7 +295,7 @@ export default function RightBranch() {
                 <h2>2. Birth Weight</h2>
                 {renderRadioGroup("birth_weight", "Is the birth weight ≥ 1.8 kg?", ["Yes", "No"])}
                 
-                <h2>3. Age of Neonate</h2>
+                <h2>3. Age of the Neonate</h2>
                 {renderRadioGroup("neonate_age", "Is the neonate ≤ 6 hours old?", ["Yes", "No"])}
                 
                 <div className="part-4">
@@ -345,12 +345,12 @@ export default function RightBranch() {
                 </div>
                     <div className="part-5">
                     <h2>5. Has seizures or 3 of 6 of the following signs of encephalopathy are moderate or severe:</h2>
-                
+
                     {renderRadioGroup("has_seizures", "Does the neonate have seizures?", ["Yes", "No"])}
-                
+
                     <div className="part-5-container">
                         <div className="part-5-description-container">
-                
+
                         </div>
                         <h3>General</h3>
                         {renderRadioGroup("level_of_consciousness", "Level of Consciousness", [
@@ -359,28 +359,28 @@ export default function RightBranch() {
                             "Moderate - Lethargic", 
                             "Severe - Stupor/Coma"
                         ])}
-    
+
                         {renderRadioGroup("spontaneous_activity", "Spontaneous Activity", [
                             "Normal - Changes position when awake", 
                             "Mild - Normal", 
                             "Moderate - Decreased activity", 
                             "Severe - No activity"
                         ])}
-    
+
                         {renderRadioGroup("posture", "Posture", [
                             "Normal - Predominantly flexed when quiet", 
                             "Mild - Mild flexion of distal joints", 
                             "Moderate - Distal flexion, complete extension, frog leg posture", 
                             "Severe - Decerebrate"
                         ])}
-    
+
                         {renderRadioGroup("tone", "Tone", [
                             "Normal - Strong flexor tone in all extremities + hips", 
                             "Mild - Normal or slightly increased peripheral tone", 
                             "Moderate - Hypotonia (focal/general), hypertonia (focal/truncal)", 
                             "Severe - Flaccid"
                         ])}
-    
+
                         <h3>Primitive Reflexes (Only uses most severe criteria)</h3>
                         {renderRadioGroup("suck", "Suck", [
                             "Normal - Strong, easily elicited", 
@@ -388,14 +388,14 @@ export default function RightBranch() {
                             "Moderate - Weak or bite", 
                             "Severe - Absent"
                         ])}
-    
+
                         {renderRadioGroup("moro", "Moro", [
                             "Normal - Complete", 
                             "Mild - Partial response, low threshold to elicit", 
                             "Moderate - Incomplete", 
                             "Severe - Absent"
                         ])}
-    
+
                         <h3>Autonomic System (Only uses most severe criteria)</h3>
                         {renderRadioGroup("pupils", "Pupils", [
                             "Normal", 
@@ -403,14 +403,14 @@ export default function RightBranch() {
                             "Moderate - Constricted", 
                             "Severe - Skew deviation / dilated / non-reactive"
                         ])}
-    
+
                         {renderRadioGroup("heart_rate", "Heart Rate", [
                             "Normal - 100–160 bpm", 
                             "Mild - Tachycardia (>160)", 
                             "Moderate - Bradycardia", 
                             "Severe - Variable"
                         ])}
-    
+
                         {renderRadioGroup("respirations", "Respirations", [
                             "Normal - Regular respirations", 
                             "Mild - Hyperventilation (RR > 60)", 
