@@ -310,7 +310,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
                         type="number"
                         value={Ph}
                         onChange={(e) => setPh(e.target.value)}
-                        placeholder="pH"
+                        placeholder="pH (e.g. 7.2)"
                         step="0.01"
                     />
                 </div>
@@ -321,7 +321,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
                         type="number"
                         value={BaseDeficit}
                         onChange={(e) => setBaseDeficit(e.target.value)}
-                        placeholder="Base Deficit"
+                        placeholder="Base Deficit (e.g. 15.2)"
                         step="0.01"
                     />
                 </div>
