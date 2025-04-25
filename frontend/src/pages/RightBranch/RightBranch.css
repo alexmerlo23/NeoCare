@@ -267,7 +267,7 @@
 }
 
 /* Referal center section*/
-.referal-center-container{
+.referral-center-container{
     border: 3px solid black;
     border-radius: 5px;
     margin: 10px;
@@ -422,9 +422,10 @@
         font-size: .8rem;
     } 
 
-    .referal-center-container{
+    .referral-center-container{
+        padding: 3px;
         width: 89%;
-        font-size: .8rem;
+        font-size: .6rem;
     }
 
     .button-group button{

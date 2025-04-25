@@ -428,8 +428,8 @@ newCriteria.signs_of_encephalopathy = numSigns;
                     </div>
                 )}
                 {summary && (
-                <div className="referal-center-container">
-                        <h1><strong>Call referal center for further guidence</strong></h1>
+                <div className="referral-center-container">
+                        <h1><strong>Call referral center for further guidence</strong></h1>
                 </div>
             )}
             </div>
