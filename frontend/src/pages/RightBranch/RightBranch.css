@@ -256,6 +256,7 @@
 .summary-button {
     margin: 2%;
     padding: 10px 20px;
+    border: 2px solid black;
     border-radius: 5px;
     font-size: 1.2rem;
     cursor: pointer;
@@ -287,6 +288,7 @@
     margin: 2%;
     width: 30%;
     padding: 10px 20px;
+    border: 2px solid black;
     border-radius: 5px;
     font-size: 1.2rem;
     cursor: pointer;
