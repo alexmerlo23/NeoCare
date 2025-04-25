@@ -402,6 +402,10 @@
         width: 40%;
     }
     
+    .summary-section{
+        padding: 5px;
+    }
+
     .summary-section h1 {
     font-size: 1rem;
     }

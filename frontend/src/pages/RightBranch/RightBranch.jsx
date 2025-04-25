@@ -100,7 +100,7 @@ export default function RightBranch() {
             summaryText += `${criteria.has_seizures === "0" ? "• The neonate has seizures<br />" : ""}`;
         }
     
-        summaryText += `<h4>Signs of Encephalopathy:</h4>`;
+        summaryText += `${criteria.signs_of_encephalopathy > 0 ? '<h4>Signs of Encephalopathy:</h4>' : ""}`;
         summaryText += `${criteria.has_seizures === "0" ? "The neonate has seizures<br />" : ""}`;
     
         const encephalopathySigns = Object.entries(criteria.encephalopathy_details)
