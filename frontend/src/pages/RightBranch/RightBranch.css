@@ -373,10 +373,12 @@
     }
 
     .right-branch-images{
+        margin-left: -2%;
         width: 104%;
     }
 
     .right-branch-sarnat-exam {
+        margin-left: -2%;
         width: 105%;
     }
 
