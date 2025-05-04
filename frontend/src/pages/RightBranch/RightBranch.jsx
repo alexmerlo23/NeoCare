@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"; // Add useEffect to imports
 import './RightBranch.css';
-import { useNavigate } from "react-router-dom";
 
 export default function RightBranch() {
     const [summary, setSummary] = useState("");
@@ -9,7 +8,7 @@ export default function RightBranch() {
     const [criteria, setCriteria] = useState({
         gestational_age: "",
         birth_weight: "",
-        time_since_insult: "",
+        neonate_age: "",
         acute_perinatal_event: "",
         apgar_assisted_ventilation: "",
         has_seizures: "",
@@ -70,6 +69,10 @@ export default function RightBranch() {
     
         const hasSeizuresOrThreeSigns = criteria.has_seizures === "0" || modSevCount >= 3;
     
+        console.log("modSevCount:", modSevCount);
+        console.log("predictorMet:", predictorMet);
+        console.log("hasSeizuresOrThreeSigns:", hasSeizuresOrThreeSigns);
+
         const qualifies =
             criteria.gestational_age === "0" &&
             criteria.birth_weight === "0" &&
@@ -77,10 +80,12 @@ export default function RightBranch() {
             predictorMet &&
             hasSeizuresOrThreeSigns;
     
+        
+        console.log("qualifies:", qualifies);
         let summaryText = `The Sarnat exam results indicate that the neonate <b>${qualifies ? "qualifies" : "does not qualify"}</b> for Systemic Hypothermia.<br /><br />`;
     
         if (predictorMet && qualifies) {
-            summaryText += `The predictors that justify this are:<br />`;
+            summaryText += `<h4>The predictors that justify this are:</h4>`;
     
             if (predictorA) {
                 summaryText += `• Predictor A - pH is ≤ 7.0 with base deficit ≥ 16<br />`;
@@ -97,11 +102,10 @@ export default function RightBranch() {
                 summaryText += `None<br />`;
             }
     
-            summaryText += `${criteria.has_seizures === "0" ? "• The neonate has seizures<br />" : ""}`;
         }
     
         summaryText += `${criteria.signs_of_encephalopathy > 0 ? '<h4>Signs of Encephalopathy:</h4>' : ""}`;
-        summaryText += `${criteria.has_seizures === "0" ? "The neonate has seizures<br />" : ""}`;
+        summaryText += `${criteria.has_seizures === "0" ? "• The neonate has seizures<br />" : ""}`;
     
         const encephalopathySigns = Object.entries(criteria.encephalopathy_details)
             .filter(([_, value]) => value === "Mild" || value === "Moderate" || value === "Severe")
@@ -109,7 +113,7 @@ export default function RightBranch() {
                 const signName = key.replace(/_/g, " ");
                 const severityIndex = ["Normal", "Mild", "Moderate", "Severe"].indexOf(value);
                 const signValue = optionsMap[key]?.[severityIndex] || value;
-                return `Neonate's ${signName} - ${signValue} (${value} sign of encephalopathy)`;
+                return `• Neonate's ${signName} - ${signValue} (${value} sign of encephalopathy)`;
             });
     
         if (encephalopathySigns.length > 0) {
@@ -300,7 +304,7 @@ newCriteria.signs_of_encephalopathy = numSigns;
                 {renderRadioGroup("birth_weight", "Is the birth weight ≥ 1.8 kg?", ["Yes", "No"])}
                 
                 <h2>3. Time Since Insult</h2>
-                {renderRadioGroup("time_since_insult", "Has it been ≤ 6 hours since the last insult occurred?", ["Yes", "No"])}
+                {renderRadioGroup("neonate_age", "Neonate is ≤ 6 hours old?", ["Yes", "No"])}
                 
                 <h2>4. ONE OR MORE Predictors of Severe HIE (Enter pH and base deficit)</h2>
                 <div className="input-group">
